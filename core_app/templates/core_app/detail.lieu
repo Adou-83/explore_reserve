@@ -1,0 +1,22 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Détails du lieu : {{ lieu.nom }}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{{ lieu.nom }}</h2>
+
+  <div class="card mb-4 shadow-sm">
+    {% if lieu.image %}
+      <img src="{{ lieu.image.url }}" class="card-img-top" alt="{{ lieu.nom }}">
+    {% else %}
+      <img src="{% static 'images/default_image.jpg' %}" class="card-img-top" alt="Image par défaut">
+    {% endif %}
+    <div class="card-body">
+      <p><strong>Adresse :</strong> {{ lieu.adresse }}</p>
+      <p><strong>Ville :</strong> {{ lieu.ville }}</p>
+      <p><strong>Description :</strong></p>
+      <p>{{ lieu.description }}</p>
+      <a href="{% url 'liste_lieu' %}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    </div>
+  </div>
+{% endblock %}

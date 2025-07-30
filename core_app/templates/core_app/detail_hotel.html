@@ -1,0 +1,27 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Détails de l'hôtel : {{ hotel.nom }}{% endblock %}
+
+{% block content %}
+  <h2 class="mb-4">{{ hotel.nom }}</h2>
+
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <p><strong>Adresse :</strong> {{ hotel.adresse }}</p>
+      <p><strong>Prix par nuit :</strong> {{ hotel.prix_par_nuit }} FCFA</p>
+      
+      <h5 class="mt-4">Chambres disponibles</h5>
+      <ul class="list-group">
+        {% for chambre in hotel.chambre_set.all %}
+          <li class="list-group-item">
+            Chambre {{ chambre.numero }} - Capacité : {{ chambre.capacite }} personne(s)
+          </li>
+        {% empty %}
+          <li class="list-group-item">Aucune chambre disponible</li>
+        {% endfor %}
+      </ul>
+      
+      <a href="{% url 'accueil' %}" class="btn btn-secondary mt-3">Retour à l'accueil</a>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Liste des Hôtels{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Liste des Hôtels</h2>
+    <div class="row">
+        {% for hotel in hotels %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <img src="{{ hotel.image.url }}" class="card-img-top" alt="{{ hotel.nom }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ hotel.nom }}</h5>
+                    <p class="card-text">{{ hotel.description|truncatewords:20 }}</p>
+                    <p class="card-text"><strong>Prix :</strong> {{ hotel.prix_par_nuit }} FCFA/nuit</p>
+                    <a href="{% url 'detail_hotel' hotel.id %}" class="btn btn-primary">Voir Détail</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

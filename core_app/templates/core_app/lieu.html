@@ -1,0 +1,33 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Lieux touristiques{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4">Lieux touristiques</h2>
+
+  <div class="row">
+    {% for lieu in lieux %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          {% if lieu.image %}
+            <img src="{{ lieu.image.url }}" class="card-img-top" alt="{{ lieu.nom }}" title="{{ lieu.nom }}">
+          {% else %}
+            <img src="{% static 'images/default_image.jpg' %}" class="card-img-top" alt="Image par défaut" title="Image par défaut">
+          {% endif %}
+          <div class="card-body">
+            <h5 class="card-title">{{ lieu.nom }}</h5>
+            <p class="card-text">{{ lieu.description|truncatewords:20 }}</p>
+            <p><strong>Adresse :</strong> {{ lieu.adresse }}</p>
+            <p><strong>Ville :</strong> {{ lieu.ville }}</p>
+            <!-- <a href="#" class="btn btn-primary mt-2">Voir plus</a> -->
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>Aucun lieu disponible pour le moment.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

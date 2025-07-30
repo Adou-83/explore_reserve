@@ -1,0 +1,42 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Accueil - Mon Site Touristique{% endblock %}
+
+{% block content %}
+<div class="text-center mt-5">
+  <h1 class="display-4">Bienvenue sur notre plateforme touristique 🏝️</h1>
+  <p class="lead mt-3">Découvrez les plus beaux lieux, hôtels et réservez facilement.</p>
+
+  <div class="row mt-5">
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Lieux touristiques</h5>
+          <p class="card-text">Explorez des destinations exceptionnelles à visiter.</p>
+          <a href="{% url 'liste_lieux' %}" class="btn btn-primary">Voir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Hôtels</h5>
+          <p class="card-text">Trouvez les meilleurs hôtels pour votre séjour.</p>
+          <a href="/hotels/" class="btn btn-success">Voir</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card border-0 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Réservations</h5>
+          <p class="card-text">Réservez votre chambre en quelques clics.</p>
+          <a href="/reservations/ajouter/" class="btn btn-warning">Réserver</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

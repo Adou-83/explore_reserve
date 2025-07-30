@@ -1,0 +1,32 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+
+{% block title %}Détail de l'Hôtel{% endblock %}
+
+{% block content %}
+<h2>{{ hotel.nom }}</h2>
+
+{% if hotel.image %}
+  <img src="{{ hotel.image.url }}" alt="{{ hotel.nom }}" class="img-fluid mb-3">
+{% endif %}
+
+<p><strong>Adresse :</strong> {{ hotel.adresse }}</p>
+<p><strong>Description :</strong> {{ hotel.description }}</p>
+<p><strong>Type :</strong> {{ hotel.get_type_display }}</p>
+<p><strong>Prix par nuit :</strong> {{ hotel.prix_par_nuit }} FCFA</p>
+
+<h3>Chambres disponibles</h3>
+<ul>
+  {% for chambre in chambres %}
+    <li>
+      <strong>Numéro :</strong> {{ chambre.numero }} -
+      <strong>Type :</strong> {{ chambre.type_chambre }} -
+      <strong>Prix :</strong> {{ chambre.prix }} FCFA
+    </li>
+  {% empty %}
+    <li>Aucune chambre disponible.</li>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'liste_hotels' %}" class="btn btn-secondary mt-3">Retour à la liste</a>
+{% endblock %}

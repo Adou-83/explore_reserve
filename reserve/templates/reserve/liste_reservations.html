@@ -1,0 +1,25 @@
+{% extends "core_app/base.html" %}
+
+{% block title %}Liste des réservations{% endblock %}
+
+{% block content %}
+<h2>Liste des réservations</h2>
+
+{% if reservations %}
+    <ul>
+    {% for reservation in reservations %}
+        <li>
+            Réservation #{{ reservation.id }} - 
+            Client : {{ reservation.client.username }} - 
+            Chambre : {{ reservation.chambre.numero }} - 
+            Du {{ reservation.date_arrivee }} au {{ reservation.date_depart }} - 
+            Réservée le {{ reservation.date_reservation|date:"d/m/Y H:i" }} - 
+            Statut : {{ reservation.get_statut_display }}
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>Aucune réservation trouvée.</p>
+{% endif %}
+
+{% endblock %}

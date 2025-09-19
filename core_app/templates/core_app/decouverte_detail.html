@@ -1,0 +1,27 @@
+{% extends "core_app/base.html" %}
+
+{% block title %}{{ decouverte.titre }} - Détails{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Titre de la découverte -->
+    <h2 class="mb-4 text-center">{{ decouverte.titre }}</h2>
+
+    <!-- Image principale -->
+    {% if decouverte.image %}
+    <div class="text-center mb-4">
+        <img src="{{ decouverte.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ decouverte.titre }}">
+    </div>
+    {% endif %}
+
+    <!-- Contenu -->
+    <div class="mb-4">
+        <p>{{ decouverte.contenu }}</p>
+    </div>
+
+    <!-- Bouton retour à la liste des découvertes -->
+    <div class="text-center mb-4">
+        <a href="{% url 'core_app:page_decouverte' %}" class="btn btn-secondary">← Retour à la liste des découvertes</a>
+    </div>
+</div>
+{% endblock %}

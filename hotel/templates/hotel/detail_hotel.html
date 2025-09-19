@@ -1,32 +1,36 @@
-{% extends 'core_app/base.html' %}
+ {% extends 'core_app/base.html' %}
 {% load static %}
-
-{% block title %}Détail de l'Hôtel{% endblock %}
+{% block title %}{{ hotel.nom }}{% endblock %}
 
 {% block content %}
-<h2>{{ hotel.nom }}</h2>
+<h2 class="mb-4">{{ hotel.nom }} ({{ hotel.get_type_hotel_display }})</h2>
 
-{% if hotel.image %}
-  <img src="{{ hotel.image.url }}" alt="{{ hotel.nom }}" class="img-fluid mb-3">
-{% endif %}
+<div class="row">
+    <div class="col-md-6">
+        {% if hotel.image %}
+            <img src="{{ hotel.image.url }}" class="img-fluid rounded mb-3" alt="{{ hotel.nom }}">
+        {% else %}
+            <img src="{% static 'default.jpg' %}" class="img-fluid rounded mb-3" alt="{{ hotel.nom }}">
+        {% endif %}
+        <p><strong>Adresse :</strong> {{ hotel.adresse }}</p>
+        <p><strong>Prix par nuit :</strong> {{ hotel.prix_nuit }} FCFA</p>
+        <p>{{ hotel.description }}</p>
+        <a href="{% url 'reserve:ajouter_reservation' %}" class="btn btn-success">Réserver</a>
+    </div>
 
-<p><strong>Adresse :</strong> {{ hotel.adresse }}</p>
-<p><strong>Description :</strong> {{ hotel.description }}</p>
-<p><strong>Type :</strong> {{ hotel.get_type_display }}</p>
-<p><strong>Prix par nuit :</strong> {{ hotel.prix_par_nuit }} FCFA</p>
-
-<h3>Chambres disponibles</h3>
-<ul>
-  {% for chambre in chambres %}
-    <li>
-      <strong>Numéro :</strong> {{ chambre.numero }} -
-      <strong>Type :</strong> {{ chambre.type_chambre }} -
-      <strong>Prix :</strong> {{ chambre.prix }} FCFA
-    </li>
-  {% empty %}
-    <li>Aucune chambre disponible.</li>
-  {% endfor %}
-</ul>
-
-<a href="{% url 'liste_hotels' %}" class="btn btn-secondary mt-3">Retour à la liste</a>
+    <div class="col-md-6">
+        <h4>Chambres disponibles</h4>
+        {% if chambres %}
+        <ul class="list-group">
+            {% for chambre in chambres %}
+                <li class="list-group-item">
+                    {{ chambre.nom }} - {{ chambre.prix }} FCFA
+                </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+            <p>Aucune chambre disponible.</p>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}

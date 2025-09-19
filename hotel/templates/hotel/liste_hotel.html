@@ -1,0 +1,27 @@
+{% extends 'core_app/base.html' %}
+{% load static %}
+{% block title %}Nos Hôtels{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Liste des Hôtels</h2>
+<div class="row">
+    {% for hotel in hotels %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            {% if hotel.image %}
+                <img src="{{ hotel.image.url }}" class="card-img-top" alt="{{ hotel.nom }}">
+            {% else %}
+                <img src="{% static 'default.jpg' %}" class="card-img-top" alt="{{ hotel.nom }}">
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">{{ hotel.nom }} ({{ hotel.get_type_hotel_display }})</h5>
+                <p class="card-text">{{ hotel.prix_nuit }} FCFA / nuit</p>
+                <a href="{% url 'hotel:detail_hotel' hotel.pk %}" class="btn btn-primary mt-auto">Voir Détail</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>Aucun hôtel disponible.</p>
+    {% endfor %}
+</div>
+{% endblock %}

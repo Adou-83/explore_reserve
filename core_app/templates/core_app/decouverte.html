@@ -1,0 +1,27 @@
+{% extends "core_app/base.html" %}
+
+{% block title %}Découvertes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Découvertes</h2>
+    <div class="row">
+        {% for decouverte in decouvertes %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if decouverte.image %}
+                <img src="{{ decouverte.image.url }}" class="card-img-top" alt="{{ decouverte.titre }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ decouverte.titre }}</h5>
+                    <p class="card-text">{{ decouverte.contenu|truncatewords:15 }}</p>
+                    <a href="{% url 'core_app:decouverte_detail' decouverte.pk %}" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Aucune découverte disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

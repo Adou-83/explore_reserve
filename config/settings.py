@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
+import dj_database_url  # pour Heroku plus tard
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,6 +68,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                 'core_app.context_processors.publicites_context',
             ],
         },
     },
@@ -75,13 +79,23 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
+# Base de données PostgreSQL via .env
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'explore_reserve_db',   # Nom de la base
+        'USER': 'postgres',             # Utilisateur PostgreSQL
+        'PASSWORD': 'seigneur123', # Mot de passe PostgreSQL
+        'HOST': 'localhost',            # Serveur PostgreSQL
+        'PORT': '5432',                 # Port PostgreSQL
     }
 }
+
+# Optionnel : mise à jour de la DB pour Heroku (décommente quand dj-database-url est installé)
+# import dj_database_url
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
+
 
 
 # Password validation
@@ -126,3 +140,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'core_app', 'static')]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+
+

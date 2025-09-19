@@ -1,0 +1,29 @@
+{% extends "core_app/base.html" %}
+
+{% block title %}{{ chambre.nom }} - Détails{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Titre de la chambre -->
+    <h2 class="mb-4 text-center">{{ chambre.nom }}</h2>
+
+    <!-- Image principale -->
+    {% if chambre.image %}
+    <div class="text-center mb-4">
+        <img src="{{ chambre.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ chambre.nom }}">
+    </div>
+    {% endif %}
+
+    <!-- Description et prix -->
+    <div class="mb-4">
+        <p>{{ chambre.description }}</p>
+        <p><strong>Prix :</strong> {{ chambre.prix }} €</p>
+        <p><strong>Hôtel :</strong> {{ chambre.hotel.nom }}</p>
+    </div>
+
+    <!-- Bouton retour à la liste des chambres -->
+    <div class="text-center mb-4">
+        <a href="{% url 'hotel:liste_chambres' %}" class="btn btn-secondary">← Retour à la liste des chambres</a>
+    </div>
+</div>
+{% endblock %}

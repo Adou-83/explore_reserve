@@ -1,0 +1,37 @@
+{% extends "core_app/base.html" %}
+
+{% block title %}{{ lieu.nom }} - Détails{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <!-- Titre du lieu -->
+    <h2 class="mb-4 text-center">{{ lieu.nom }}</h2>
+
+    <!-- Image principale -->
+    {% if lieu.image %}
+    <div class="text-center mb-4">
+        <img src="{{ lieu.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ lieu.nom }}">
+    </div>
+    {% endif %}
+
+    <!-- Description -->
+    <div class="mb-4">
+        <p>{{ lieu.description }}</p>
+    </div>
+
+    <!-- Bouton retour à la liste -->
+    <div class="text-center mb-4">
+        <a href="{% url 'core_app:liste_lieux' %}" class="btn btn-secondary">← Retour à la liste des lieux</a>
+    </div>
+
+    <!-- Section commentaires (si existants) -->
+    {% if commentaires %}
+    <h4 class="mb-3">Commentaires</h4>
+    <ul class="list-group mb-4">
+        {% for comment in commentaires %}
+        <li class="list-group-item">{{ comment }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
+{% endblock %}

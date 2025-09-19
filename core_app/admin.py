@@ -1,22 +1,23 @@
 from django.contrib import admin
-from .models import Hotel, Chambre, ProfilUtilisateur, Lieu
+from .models import Lieu, ProfilUtilisateur, Decouverte, Publicite
 
-@admin.register(Hotel)
-class HotelAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'adresse', 'prix_par_nuit')
-    list_filter = ('nom',)  # Par exemple on peut filtrer par nom d’hôtel
-
-@admin.register(Chambre)
-class ChambreAdmin(admin.ModelAdmin):
-    list_display = ('hotel', 'numero', 'capacite')
-    list_filter = ('hotel',)
+@admin.register(Lieu)
+class LieuAdmin(admin.ModelAdmin):
+    list_display = ('nom', 'ville', 'adresse')
+    search_fields = ('nom', 'ville')
 
 @admin.register(ProfilUtilisateur)
 class ProfilUtilisateurAdmin(admin.ModelAdmin):
     list_display = ('utilisateur', 'telephone')
-    list_filter = ('utilisateur',)
+    search_fields = ('utilisateur__username',)
 
-@admin.register(Lieu)
-class LieuAdmin(admin.ModelAdmin):
-    list_display = ('nom', 'adresse')
-    search_fields = ('nom',)
+@admin.register(Decouverte)
+class DecouverteAdmin(admin.ModelAdmin):
+    list_display = ('titre', 'auteur', 'date_publication')
+    search_fields = ('titre', 'auteur')
+    list_filter = ('date_publication',)
+
+@admin.register(Publicite)
+class PubliciteAdmin(admin.ModelAdmin):
+    list_display = ('titre', 'actif')
+    list_filter = ('actif',)

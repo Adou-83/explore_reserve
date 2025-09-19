@@ -1,25 +1,48 @@
-{% extends "core_app/base.html" %}
+{% extends 'core_app/base.html' %}
 
-{% block title %}Liste des réservations{% endblock %}
+{% block title %}Mes Réservations{% endblock %}
 
 {% block content %}
-<h2>Liste des réservations</h2>
+<div class="container mt-4">
+    <h2>📋 Mes Réservations</h2>
 
-{% if reservations %}
-    <ul>
-    {% for reservation in reservations %}
-        <li>
-            Réservation #{{ reservation.id }} - 
-            Client : {{ reservation.client.username }} - 
-            Chambre : {{ reservation.chambre.numero }} - 
-            Du {{ reservation.date_arrivee }} au {{ reservation.date_depart }} - 
-            Réservée le {{ reservation.date_reservation|date:"d/m/Y H:i" }} - 
-            Statut : {{ reservation.get_statut_display }}
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Aucune réservation trouvée.</p>
-{% endif %}
-
+    {% if reservations %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Hôtel</th>
+                    <th>Chambre</th>
+                    <th>Date d'arrivée</th>
+                    <th>Date de départ</th>
+                    <th>Statut</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for reservation in reservations %}
+                <tr>
+                    <td>{{ reservation.chambre.hotel.nom }}</td>
+                    <td>{{ reservation.chambre.numero }}</td>
+                    <td>{{ reservation.date_arrivee }}</td>
+                    <td>{{ reservation.date_depart }}</td>
+                    <td>
+                        {% if reservation.statut == "en attente" %}
+                            ⏳ En attente
+                        {% elif reservation.statut == "confirmée" %}
+                            ✅ Confirmée
+                        {% elif reservation.statut == "annulée" %}
+                            ❌ Annulée
+                        {% else %}
+                            {{ reservation.statut }}
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-info">
+            Vous n'avez aucune réservation pour le moment.
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'core_app/base.html' %}
+
+{% block title %}Inscription - Explore Réserve{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+  <div class="col-md-6 col-lg-4">
+    <h2>Créer un compte</h2>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">S’inscrire</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

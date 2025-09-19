@@ -1,27 +1,51 @@
-{% extends 'core_app/base.html' %}
+{% extends "core_app/base.html" %}
 
-{% block title %}Détails de l'hôtel : {{ hotel.nom }}{% endblock %}
+{% block title %}{{ hotel.nom }} - Détails{% endblock %}
 
 {% block content %}
-  <h2 class="mb-4">{{ hotel.nom }}</h2>
+<div class="container mt-4">
+    <!-- Titre de l'hôtel -->
+    <h2 class="mb-4 text-center">{{ hotel.nom }}</h2>
 
-  <div class="card mb-4 shadow-sm">
-    <div class="card-body">
-      <p><strong>Adresse :</strong> {{ hotel.adresse }}</p>
-      <p><strong>Prix par nuit :</strong> {{ hotel.prix_par_nuit }} FCFA</p>
-      
-      <h5 class="mt-4">Chambres disponibles</h5>
-      <ul class="list-group">
-        {% for chambre in hotel.chambre_set.all %}
-          <li class="list-group-item">
-            Chambre {{ chambre.numero }} - Capacité : {{ chambre.capacite }} personne(s)
-          </li>
-        {% empty %}
-          <li class="list-group-item">Aucune chambre disponible</li>
-        {% endfor %}
-      </ul>
-      
-      <a href="{% url 'accueil' %}" class="btn btn-secondary mt-3">Retour à l'accueil</a>
+    <!-- Image principale -->
+    {% if hotel.image %}
+    <div class="text-center mb-4">
+        <img src="{{ hotel.image.url }}" class="img-fluid rounded shadow-sm" alt="{{ hotel.nom }}">
     </div>
-  </div>
+    {% endif %}
+
+    <!-- Description -->
+    <div class="mb-4">
+        <p>{{ hotel.description }}</p>
+        <p><strong>Adresse :</strong> {{ hotel.adresse }}</p>
+        <p><strong>Nombre d'étoiles :</strong> {{ hotel.nb_etoiles }}</p>
+    </div>
+
+    <!-- Bouton retour à la liste -->
+    <div class="text-center mb-4">
+        <a href="{% url 'hotel:liste_hotels' %}" class="btn btn-secondary">← Retour à la liste des hôtels</a>
+    </div>
+
+    <!-- Liste des chambres de l'hôtel -->
+    {% if chambres %}
+    <h4 class="mb-3">Chambres disponibles</h4>
+    <div class="row">
+        {% for chambre in chambres %}
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                {% if chambre.image %}
+                <img src="{{ chambre.image.url }}" class="card-img-top" alt="{{ chambre.nom }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ chambre.nom }}</h5>
+                    <p class="card-text">{{ chambre.description|truncatewords:15 }}</p>
+                    <p><strong>Prix :</strong> {{ chambre.prix }} €</p>
+                    <a href="{% url 'hotel:detail_chambre' chambre.pk %}" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
 {% endblock %}

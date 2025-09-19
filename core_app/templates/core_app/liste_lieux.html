@@ -1,0 +1,27 @@
+{% extends "core_app/base.html" %}
+
+{% block title %}Lieux touristiques{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Liste des lieux touristiques</h2>
+    <div class="row">
+        {% for lieu in lieux %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if lieu.image %}
+                <img src="{{ lieu.image.url }}" class="card-img-top" alt="{{ lieu.nom }}">
+                {% endif %}
+                <div class="card-body text-center">
+                    <h5 class="card-title">{{ lieu.nom }}</h5>
+                    <p class="card-text">{{ lieu.description|truncatewords:15 }}</p>
+                    <a href="{% url 'core_app:detail_lieu' lieu.pk %}" class="btn btn-primary">Voir détails</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Aucun lieu disponible.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

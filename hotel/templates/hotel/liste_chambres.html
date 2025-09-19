@@ -1,0 +1,32 @@
+ {% extends 'core_app/base.html' %}
+
+{% block title %}Liste des chambres{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Nos Chambres Disponibles</h2>
+
+    {% if chambres %}
+        <div class="row">
+            {% for chambre in chambres %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ chambre.nom }}</h5>
+                            <p class="card-text">{{ chambre.description|truncatewords:20 }}</p>
+                            <p class="fw-bold text-success">Prix : {{ chambre.prix }} F CFA / nuit</p>
+                            <a href="{% url 'detail_chambre' pk=chambre.id %}" class="btn btn-primary">Voir détails</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="text-muted text-center">Aucune chambre disponible pour le moment.</p>
+    {% endif %}
+
+    <div class="text-center mt-4">
+        <a href="{% url 'liste_hotels' %}" class="btn btn-secondary">Retour à la liste des hôtels</a>
+    </div>
+</div>
+{% endblock %}

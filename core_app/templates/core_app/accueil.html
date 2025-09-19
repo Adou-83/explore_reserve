@@ -1,42 +1,105 @@
 {% extends 'core_app/base.html' %}
 
-{% block title %}Accueil - Mon Site Touristique{% endblock %}
+{% block title %}Accueil - Explore Réserve{% endblock %}
 
 {% block content %}
-<div class="text-center mt-5">
-  <h1 class="display-4">Bienvenue sur notre plateforme touristique 🏝️</h1>
-  <p class="lead mt-3">Découvrez les plus beaux lieux, hôtels et réservez facilement.</p>
+<div class="container mt-5">
 
-  <div class="row mt-5">
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Lieux touristiques</h5>
-          <p class="card-text">Explorez des destinations exceptionnelles à visiter.</p>
-          <a href="{% url 'liste_lieux' %}" class="btn btn-primary">Voir</a>
-        </div>
-      </div>
+    <!-- Bannière d'accueil -->
+    <div class="text-center mb-5">
+        <h1 class="display-4">Bienvenue sur Explore Réserve 🏝️</h1>
+        <p class="lead mt-3">Découvrez les plus beaux lieux, hôtels et réservez facilement.</p>
     </div>
 
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Hôtels</h5>
-          <p class="card-text">Trouvez les meilleurs hôtels pour votre séjour.</p>
-          <a href="/hotels/" class="btn btn-success">Voir</a>
+    <!-- Sections principales -->
+    <div class="row mb-5">
+
+        <!-- Lieux touristiques -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Lieux touristiques</h5>
+                    <p class="card-text">Explorez des destinations exceptionnelles à visiter.</p>
+                    <a href="{% url 'core_app:liste_lieux' %}" class="btn btn-primary">Voir</a>
+                </div>
+            </div>
         </div>
-      </div>
+
+        <!-- Hôtels -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Hôtels</h5>
+                    <p class="card-text">Trouvez les meilleurs hôtels pour votre séjour.</p>
+                    <a href="{% url 'hotel:liste_hotels' %}" class="btn btn-success">Voir</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Découvertes -->
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Découvertes</h5>
+                    <p class="card-text">Lisez nos articles sur les lieux et cultures locales.</p>
+                    <a href="{% url 'core_app:page_decouverte' %}" class="btn btn-warning">Voir</a>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="col-md-4">
-      <div class="card border-0 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title">Réservations</h5>
-          <p class="card-text">Réservez votre chambre en quelques clics.</p>
-          <a href="/reservations/ajouter/" class="btn btn-warning">Réserver</a>
+    <!-- Section Réservations -->
+    <div class="row mb-5">
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Réservations</h5>
+                    <p class="card-text">Consultez vos réservations en cours.</p>
+                    <a href="{% url 'reserve:mes_reservations' %}" class="btn btn-info">Voir mes réservations</a>
+                </div>
+            </div>
         </div>
-      </div>
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body text-center">
+                    <h5 class="card-title">Réserver maintenant</h5>
+                    <p class="card-text">Réservez votre chambre ou hôtel en quelques clics.</p>
+                    <a href="{% url 'reserve:ajouter_reservation' %}" class="btn btn-danger">Réserver</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <!-- Section publicité -->
+    <div class="row mb-5">
+        <div class="col-12">
+            <div class="alert alert-secondary text-center" role="alert">
+                🌟 Publicité / Promotion spéciale : Profitez de -20% sur votre prochaine réservation ! 🌟
+            </div>
+        </div>
+    </div>
+
+    <!-- Découvertes récentes -->
+    <div class="row mb-5">
+        <h2 class="mb-4 text-center">Découvertes récentes</h2>
+        {% for decouverte in decouvertes %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if decouverte.image %}
+                <img src="{{ decouverte.image.url }}" class="card-img-top" alt="{{ decouverte.titre }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ decouverte.titre }}</h5>
+                    <p class="card-text">{{ decouverte.contenu|truncatewords:15 }}</p>
+                    <a href="{% url 'core_app:decouverte_detail' decouverte.pk %}" class="btn btn-primary">Voir plus</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">Aucune découverte disponible pour le moment.</p>
+        {% endfor %}
+    </div>
+
 </div>
 {% endblock %}
